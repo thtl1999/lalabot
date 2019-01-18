@@ -3,13 +3,15 @@ var pic;
 const kakaopath = '/storage/emulated/0/Android/data/com.kakao.talk/contents/';
 const picpath = '/storage/emulated/0/botpic/';
 const searchserver = 'https://saucenao.com/search.php?';
-const api_key = '******************';
+const api_key = '****';
 const serverip = '****'
 var randomstring;
 var prepic;             //use for identifying best match pic in kakao cache
 var roomdict = {};      //room bot condition
 var roomsimper = {};    //room bot option
 var findingpic = 0;     //lock
+var debugstring = '';
+
 
 function findpic(dirpath, isread)
 {
@@ -30,17 +32,24 @@ function findpic(dirpath, isread)
                 //search mode activated
                 if (isread == 1)
                 {
-                    pic = new java.io.File(files[i]);
+                    var temppic = new java.io.File(files[i]);
 
-                    if (pic.length() > prepic)
+                    if (temppic.length() > prepic)  //if largest, pick
                     {
+                        pic = temppic;
                         prepic = pic.length();
-                        randomstring = Math.random().toString(36).substring(7);
-                        pic.renameTo(new java.io.File(picpath + randomstring + '.jpg'));
+                    }
+                    else    //if not largest, delete
+                    {
+                        files[i].delete();
                     }
                 }
+                else        //if not search mod, delete
+                {
+                    files[i].delete();
+                }
 
-                files[i].delete();
+                
 
             }
             else
@@ -67,6 +76,7 @@ function sendpic(room, replier, picfile)
     //replier.reply(url);
     //replier.reply(responseString);
     var jsonob = JSON.parse(responseString);
+    debugstring = responseString;
 
     var similarity = jsonob.results[0].header.similarity;
     var creator = '';
@@ -74,6 +84,7 @@ function sendpic(room, replier, picfile)
         5:'member_name',    //pixiv
         8:'member_name',    //niconico
         24:'author_name',   //deviantart
+        18:'creator',       //
         30:'creator'        //dandooru,sankaku
     }
     if (jsonob.results[0].header.index_id in creatorparamtable)
@@ -94,7 +105,7 @@ function sendpic(room, replier, picfile)
 
     secondsearchurl = 'https://iqdb.org/?url=' + serverip + picfile;
 
-    var replystring = secondsearchurl + '\n정확도: ' + similarity + '\n작가: ' + creator + '\n링크: ' + exturl + '\n' + title;
+    var replystring = secondsearchurl + '\n정확도: ' + similarity + '%\n작가: ' + creator + '\n링크: ' + exturl + '\n' + title;
 
     replier.reply(replystring);
 }
@@ -110,9 +121,9 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
         roomsimper[room] = 0;
     }
 
-    if (1 && msg == '디버그')
+    if ( true && msg == '디버그')
     {
-        //replier.reply(room);
+        replier.reply(debugstring);
     }
 
     if (msg.indexOf('라라봇설정') != -1)
@@ -125,6 +136,8 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
     if (msg == '라라봇' && roomdict[room] == 0)
     {
         replier.reply('[정확도 설정 ' + roomsimper[room] + '%]\n' + '알겠슘돠!');
+        findpic(kakaopath,0);
+        randomstring = '';
         roomdict[room] = 1;
         return;
     }
@@ -136,11 +149,12 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             findpic(kakaopath,0);
             return;
         }
-        else if (roomdict[room] == 1)
+        else if (roomdict[room] == 1)   //activated
         {
             prepic = 0;
-            //findingpic = 1;
             findpic(kakaopath,1);
+            randomstring = Math.random().toString(36).substring(7);
+            pic.renameTo(new java.io.File(picpath + randomstring + '.jpg'));
             sendpic(room,replier,randomstring);
             roomdict[room] = 0;
         }
