@@ -13,7 +13,7 @@ def get_html(url):
    return _html
 
 
-musiclevels = ['436','19','18','17','15','14','13','335','558','1056']
+musiclevels = ['436','19','18','17','15','14','13','234','335','558','1056']
 jsonlist = {}
 
 for levels in range(len(musiclevels)):
@@ -34,6 +34,7 @@ for levels in range(len(musiclevels)):
         if not i[0] == '曲名':
             songname = i[0]
             jsonlist[19 - levels].append(songname.replace('\n', ''))
+    print(jsonlist[19-levels])
 
 
 with open('songlistddr.txt', 'w') as outfile:
