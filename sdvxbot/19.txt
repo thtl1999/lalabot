@@ -1,0 +1,66 @@
+
+document.write("<script type=text/javascript src=/04/js/04236sort.js></script>");//A Lasting Promise
+document.write("<script type=text/javascript src=/04/js/04324sort.js></script>");//Absolute Domination
+document.write("<script type=text/javascript src=/04/js/04242sort.js></script>");//Awakening
+document.write("<script type=text/javascript src=/04/js/04262sort.js></script>");//BELOBOG
+document.write("<script type=text/javascript src=/04/js/04290sort.js></script>");//Chrono Diver -PENDULUMs-
+document.write("<script type=text/javascript src=/04/js/04135sort.js></script>");//Deadly force
+document.write("<script type=text/javascript src=/04/js/04137sort.js></script>");//Dyscontrolled Galaxy
+document.write("<script type=text/javascript src=/04/js/04368sort.js></script>");//Elemental Creation
+document.write("<script type=text/javascript src=/04/js/04323sort.js></script>");//Failnaught
+document.write("<script type=text/javascript src=/04/js/04056sort.js></script>");//Fin.ArcDeaR
+document.write("<script type=text/javascript src=/04/js/04322sort.js></script>");//Fly Like You
+document.write("<script type=text/javascript src=/04/js/04312sort.js></script>");//FREEDOM DiVE
+document.write("<script type=text/javascript src=/04/js/04229sort.js></script>");//GERBERA -For Finalists-
+document.write("<script type=text/javascript src=/04/js/04205sort.js></script>");//KAC 2013 Empress
+document.write("<script type=text/javascript src=/04/js/04237sort.js></script>");//Last Resort
+document.write("<script type=text/javascript src=/04/js/04069sort.js></script>");//Sailing Force
+document.write("<script type=text/javascript src=/04/js/04134sort.js></script>");//Staring at star
+document.write("<script type=text/javascript src=/04/js/04195sort.js></script>");//TWO-TORIAL
+document.write("<script type=text/javascript src=/04/js/04243sort.js></script>");//Xeroa
+document.write("<script type=text/javascript src=/04/js/04132sort.js></script>");//セイレーン ～悲壮の竪琴～
+document.write("<script type=text/javascript src=/04/js/04369sort.js></script>");//逆月
+
+document.write("<script type=text/javascript src=/04/js/04205sort.js></script>");//KAC 2013 Empress
+
+document.write("<script type=text/javascript src=/03/js/03176sort.js></script>");//FLOWER
+document.write("<script type=text/javascript src=/03/js/03178sort.js></script>");//Garakuta Doll Play
+document.write("<script type=text/javascript src=/03/js/03177sort.js></script>");//Got more raves？
+document.write("<script type=text/javascript src=/03/js/03179sort.js></script>");//きたさいたま2000
+document.write("<script type=text/javascript src=/03/js/03394sort.js></script>");//極圏
+document.write("<script type=text/javascript src=/03/js/03148sort.js></script>");//ΑΩ-
+document.write("<script type=text/javascript src=/03/js/03149sort.js></script>");//Blastix Riotz
+document.write("<script type=text/javascript src=/03/js/03359sort.js></script>");//DIABLOSIS::N&#0257;ga
+document.write("<script type=text/javascript src=/03/js/03075sort.js></script>");//Everlasting Message
+document.write("<script type=text/javascript src=/03/js/03368sort.js></script>");//FL&#0252;geL《Λrp:Σggy&#216;》
+document.write("<script type=text/javascript src=/03/js/03074sort.js></script>");//KAC 2012 ULTIMATE MEDLEY
+document.write("<script type=text/javascript src=/03/js/03263sort.js></script>");//KAC 2013 ULTIMATE MEDLEY -HISTORIA SOUND VOLTEX- Emperor Side
+document.write("<script type=text/javascript src=/03/js/03360sort.js></script>");//Load=Crossight
+document.write("<script type=text/javascript src=/03/js/03150sort.js></script>");//Preserved Valkyria
+document.write("<script type=text/javascript src=/03/js/03151sort.js></script>");//XyHATTE
+document.write("<script type=text/javascript src=/03/js/03198sort.js></script>");//月光乱舞
+document.write("<script type=text/javascript src=/03/js/03167sort.js></script>");//Firestorm
+document.write("<script type=text/javascript src=/03/js/03093sort.js></script>");//HAVOX
+document.write("<script type=text/javascript src=/03/js/03263sort.js></script>");//KAC 2013 ULTIMATE MEDLEY -HISTORIA SOUND VOLTEX- Emperor Side
+document.write("<script type=text/javascript src=/03/js/03152sort.js></script>");//veRtrageS
+document.write("<script type=text/javascript src=/03/js/03229sort.js></script>");//XHAOS JUDGE
+
+document.write("<script type=text/javascript src=/02/js/02112sort.js></script>");//Booths of Fighters
+document.write("<script type=text/javascript src=/02/js/02168sort.js></script>");//For UltraPlayers
+document.write("<script type=text/javascript src=/02/js/02277sort.js></script>");//INSECTICIDE
+document.write("<script type=text/javascript src=/02/js/02113sort.js></script>");//Quietus Ray
+document.write("<script type=text/javascript src=/02/js/02184sort.js></script>");//Verse IV
+document.write("<script type=text/javascript src=/02/js/02256sort.js></script>");//バンブーソード・ガール
+document.write("<script type=text/javascript src=/02/js/02169sort.js></script>");//Bangin' Burst
+document.write("<script type=text/javascript src=/02/js/02215sort.js></script>");//Black Emperor
+document.write("<script type=text/javascript src=/02/js/02173sort.js></script>");//BLACK or WHITE?
+document.write("<script type=text/javascript src=/02/js/02295sort.js></script>");//Growth Memories
+document.write("<script type=text/javascript src=/02/js/02119sort.js></script>");//snow storm -euphoria-
+document.write("<script type=text/javascript src=/02/js/02125sort.js></script>");//XROSS INFECTION
+document.write("<script type=text/javascript src=/02/js/02169sort.js></script>");//Bangin' Burst
+document.write("<script type=text/javascript src=/02/js/02168sort.js></script>");//For UltraPlayers
+
+document.write("<script type=text/javascript src=/01/js/01114sort.js></script>");//大宇宙ステージ
+document.write("<script type=text/javascript src=/01/js/01071sort.js></script>");//Ganymede kamome mix
+document.write("<script type=text/javascript src=/01/js/01124sort.js></script>");//Max Burning!!
+
