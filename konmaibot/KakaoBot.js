@@ -9,50 +9,66 @@ var sdvx = listload('sdvx');
 var popn = listload('popn');
 var ddr = listload('ddr');
 
-function picksong(game, songlevel, replier)
+function msgprocess(msg,gamename,game,replier)
 {
-    var selected = Math.floor(Math.random() * (game[songlevel].length));
-    replier.reply(game[songlevel][selected]);
-}
+    if (msg.indexOf('라라' + gamename) != -1)
+    {
+        if (msg.indexOf('리스트') != -1)
+        {
+            for (k in game)
+            {
+                if (msg.indexOf(k) != -1)
+                {
+                    replier.reply(game[k]);
+                    return;
+                }
+            }
 
+        }
+
+        //multiple
+        if (msg.indexOf('.') != -1)
+        {
+            msglist = msg.split('.');
+
+            if (msglist.length > 10)
+            {
+                replier.reply('너무 많아욧! >.<');
+                return;
+            }
+
+            for(var i=1;i<msglist.length;i++)
+            {
+                for (k in game)
+                {
+                    if (msglist[i] == k)
+                    {
+                        var selected = Math.floor(Math.random() * (game[k].length));
+                        replier.reply(game[k][selected]);
+                    }
+                }
+
+            }
+            return;
+        }
+
+        //single
+        for (k in game)
+        {
+            if (msg.indexOf(k) != -1)
+            {
+                var selected = Math.floor(Math.random() * (game[k].length));
+                replier.reply(game[k][selected]);
+                return;
+            }
+        }
+    }
+}
 
 function response(room, msg, sender, isGroupChat, replier, ImageDB)
 {
-
-    if (msg.indexOf('라라사볼') != -1)
-    {
-        for (k in sdvx)
-        {
-            if (msg.indexOf(k) != -1)
-            {
-                picksong(sdvx, k, replier);
-                return;
-            }
-        }
-    }
-
-    if (msg.indexOf('라라팝픈') != -1)
-    {
-        for (k in popn)
-        {
-            if (msg.indexOf(k) != -1)
-            {
-                picksong(popn, k, replier);
-                return;
-            }
-        }
-    }
-
-    if (msg.indexOf('라라디디알') != -1)
-    {
-        for (k in ddr)
-        {
-            if (msg.indexOf(k) != -1)
-            {
-                picksong(ddr, k, replier);
-                return;
-            }
-        }
-    }
+    msgprocess(msg,'사볼',sdvx,replier);
+    msgprocess(msg,'팝픈',popn,replier);
+    msgprocess(msg,'디디알',ddr,replier);
 
 }
