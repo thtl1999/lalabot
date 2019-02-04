@@ -6,7 +6,7 @@ import fileinput
 import re
 import json
 
-musiclevels = ['16','17','18','19','20']
+musiclevels = ['14','15','16','17','18','19','20']
 
 for i in musiclevels:
     req = requests.get('http://sdvx.in/sort/sort_' + i + '.js')
@@ -25,6 +25,7 @@ for i in musiclevels:
             songname = line.split('//')
             jsonlist[i].append(songname[1].replace('\n',''))
     f.close()
+    os.remove(i + '.txt')
 
 print(jsonlist)
 

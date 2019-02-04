@@ -15,7 +15,8 @@ def get_html(url):
    return _html
 
 
-musiclevels = ['1908','1907','1906','1905','1904','1903','1902','268','256','228','195']
+musiclevels = ['1908','1907','1906','1905','1904','1903','1902','268','256','228','195','162','128','84','40','2058']
+#195 = 40
 jsonlist = {}
 
 for levels in range(len(musiclevels)):
@@ -35,7 +36,10 @@ for levels in range(len(musiclevels)):
     jsonlist[50 - levels] = []
     for i in res:
         if not i[0] == 'ジャンル名 (タイプ)':
+            if i[2] in i[1]:
+                i[2] = ''
             songname = i[1] + ' ' + i[2]
+            print(songname)
             jsonlist[50 - levels].append(songname.replace('\n', ''))
 
 
