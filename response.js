@@ -11,6 +11,7 @@ var roomdict = {};      //room bot condition
 var roomsimper = {};    //room bot option
 var findingpic = 0;     //lock
 var debugstring = '';
+var piccount = 0;
 
 
 function findpic(dirpath, isread)
@@ -32,10 +33,15 @@ function findpic(dirpath, isread)
                 //search mode activated
                 if (isread == 1)
                 {
+                    piccount += 1;
                     var temppic = new java.io.File(files[i]);
 
                     if (temppic.length() > prepic)  //if largest, pick
                     {
+                        if(pic != 0){   //if there is previous picked file, delete it
+                            pic.delete();
+                        }
+                        
                         pic = temppic;
                         prepic = pic.length();
                     }
@@ -76,7 +82,7 @@ function sendpic(room, replier, picfile)
     //replier.reply(url);
     //replier.reply(responseString);
     var jsonob = JSON.parse(responseString);
-    debugstring = responseString;
+    
 
     var similarity = jsonob.results[0].header.similarity;
     var creator = '';
@@ -95,7 +101,8 @@ function sendpic(room, replier, picfile)
     var exturl = '';
     if ('ext_urls' in jsonob.results[0].data)
     {
-        exturl = jsonob.results[0].data.ext_urls;
+        exturl = String(jsonob.results[0].data.ext_urls);
+        exturl = exturl.replace(',',' , ');
     }
     var title = '';
     if ('title' in jsonob.results[0].data)
@@ -108,6 +115,8 @@ function sendpic(room, replier, picfile)
     var replystring = secondsearchurl + '\n정확도: ' + similarity + '%\n작가: ' + creator + '\n링크: ' + exturl + '\n' + title;
 
     replier.reply(replystring);
+
+    debugstring = responseString + '\n\n' + replystring + '\n\npiccount:' + piccount;
 }
 
 
@@ -151,8 +160,16 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
         }
         else if (roomdict[room] == 1)   //activated
         {
+            pic = 0;
             prepic = 0;
+            piccount = 0;
             findpic(kakaopath,1);
+            if (piccount > 4)
+            {
+                replier.reply('에러 발생 ㅠ.ㅠ\n사진을 다시 올려 주세요');
+                pic.delete();
+                return;
+            }
             randomstring = Math.random().toString(36).substring(7);
             pic.renameTo(new java.io.File(picpath + randomstring + '.jpg'));
             sendpic(room,replier,randomstring);
@@ -160,5 +177,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
         }
         
     }
+    
+    
 
 }
