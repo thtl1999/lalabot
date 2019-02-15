@@ -1,10 +1,11 @@
-
+﻿
 var pic;
 const kakaopath = '/storage/emulated/0/Android/data/com.kakao.talk/contents/';
 const picpath = '/storage/emulated/0/botpic/';
 const searchserver = 'https://saucenao.com/search.php?';
 const api_key = '****';
 const serverip = '****'
+
 var randomstring;
 var prepic;             //use for identifying best match pic in kakao cache
 var roomdict = {};      //room bot condition
@@ -73,16 +74,10 @@ function sendpic(room, replier, picfile)
 {
     picfile = picfile + '.jpg';
     var url = searchserver + 'output_type=2&numres=5&url=' + serverip + picfile;
-
-    var httpclient = new org.apache.http.impl.client.DefaultHttpClient();
-    var get = new org.apache.http.client.methods.HttpGet(url);
-    var response = httpclient.execute(get);
-    var entity = response.getEntity();
-    var responseString = org.apache.http.util.EntityUtils.toString(entity);
     //replier.reply(url);
+    var responseString = Utils.getWebText(url).replace(/<[^>]*>/g, '');
     //replier.reply(responseString);
     var jsonob = JSON.parse(responseString);
-    
 
     var similarity = jsonob.results[0].header.similarity;
     var creator = '';
@@ -117,7 +112,21 @@ function sendpic(room, replier, picfile)
     replier.reply(replystring);
 
     debugstring = responseString + '\n\n' + replystring + '\n\npiccount:' + piccount;
+    return;
 }
+
+function youtubesearch(replier, url)
+{
+    var responseString = Utils.getWebText(url).replace(/<[^>]*>/g, '');
+    var jsonob = JSON.parse(responseString);
+    //replier.reply(String(jsonob.items[0].id.videoId));
+    var vtitle = jsonob.items[0].snippet.title;
+    var vurl = 'https://youtu.be/' + String(jsonob.items[0].id.videoId);
+    var vcreator = jsonob.items[0].snippet.channelTitle;
+    replier.reply(vtitle + ' by ' + vcreator + '\n' + vurl);
+    return;
+}
+
 
 
 
@@ -139,8 +148,8 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
     {
         roomsimper[room] = Number(msg.replace(/[^0-9]/g,""));
         replier.reply('[정확도 설정 ' + roomsimper[room] + '%]\n' + '카시코마!');
+        return;
     }
-    
 
     if (msg == '라라봇' && roomdict[room] == 0)
     {

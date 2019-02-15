@@ -1,5 +1,5 @@
-const datapath = String(File.getSdcardPath()) + '/KakaoBot/BotData/learntalk/data.txt';
-var savedtxt = File.read(datapath);
+const datapath = '/storage/emulated/0' + '/KakaoBot/BotData/learntalk/data.txt';
+var savedtxt = FileStream.read(datapath);
 var jsonob = JSON.parse(savedtxt);
 var roomflag = {};
 var roomflag2 = {};
@@ -65,7 +65,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB)
             replier.reply('아하! "' + com[0] + '"는 "' + com[1] + '" 이군요!');
             roomflag[room] = 0;
             savedtxt = JSON.stringify(jsonob);
-            File.save(datapath,savedtxt);
+            FileStream.write(datapath,savedtxt);
             return;
         }
     }
