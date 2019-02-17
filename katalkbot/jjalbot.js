@@ -1,6 +1,6 @@
 const rootpath = '/storage/emulated/0/botpic/';
 const danbo_apikey = '****';
-const serverip = 'http://lalabot.ga:12345/';
+const serverip = 'http://example.com:12345/';
 const basichtml = '<html><head></head><body><img src="SOURCE" style="width: 100%; height: auto;"></body></html>';
 const requesturl = 'https://danbooru.donmai.us/posts.json?random=1&limit=50&tags=';
 const pixivurl = 'https://www.pixiv.net/member_illust.php?mode=medium&illust_id=';
