@@ -1,10 +1,11 @@
-﻿
-var pic;
+﻿var pic;
 const kakaopath = '/storage/emulated/0/Android/data/com.kakao.talk/contents/';
 const picpath = '/storage/emulated/0/botpic/';
 const searchserver = 'https://saucenao.com/search.php?';
 const api_key = '****';
-const serverip = '****'
+const serverip = 'http://example.com:12345/';
+const basichtml = FileStream.read(picpath + 'html/' + 'basehtml.html');
+const jjalpath = '/storage/emulated/0/botpic/jjal/';
 
 var randomstring;
 var prepic;             //use for identifying best match pic in kakao cache
@@ -59,7 +60,7 @@ function findpic(dirpath, isread)
                 
 
             }
-            else
+            else        //if dir, recursive
             {
                 findpic(files[i], isread);
                 files[i].delete();
@@ -115,21 +116,14 @@ function sendpic(room, replier, picfile)
     return;
 }
 
-function youtubesearch(replier, url)
+function savepic(replier, picfile)
 {
-    var responseString = Utils.getWebText(url).replace(/<[^>]*>/g, '');
-    var jsonob = JSON.parse(responseString);
-    //replier.reply(String(jsonob.items[0].id.videoId));
-    var vtitle = jsonob.items[0].snippet.title;
-    var vurl = 'https://youtu.be/' + String(jsonob.items[0].id.videoId);
-    var vcreator = jsonob.items[0].snippet.channelTitle;
-    replier.reply(vtitle + ' by ' + vcreator + '\n' + vurl);
-    return;
+    var webpicpath = serverip + 'savedpic/' + picfile + '.jpg';
+    var newhtml = basichtml.replace('SOURCE',webpicpath);
+    var newhtmlpath = picpath + 'html/' + picfile + '.html';
+    FileStream.write(newhtmlpath ,newhtml);
+    replier.reply(serverip + 'html/' + picfile + '.html');
 }
-
-
-
-
 
 function response(room, msg, sender, isGroupChat, replier, ImageDB) {
 
@@ -153,10 +147,20 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
 
     if (msg == '라라봇' && roomdict[room] == 0)
     {
+        
         replier.reply('[정확도 설정 ' + roomsimper[room] + '%]\n' + '알겠슘돠!');
         findpic(kakaopath,0);
         randomstring = '';
         roomdict[room] = 1;
+        return;
+    }
+
+    if (msg == '라라저장' && roomdict[room] == 0)
+    {
+        replier.reply('알겠슘돠!');
+        findpic(kakaopath,0);
+        randomstring = '';
+        roomdict[room] = 2;
         return;
     }
 
@@ -167,7 +171,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             findpic(kakaopath,0);
             return;
         }
-        else if (roomdict[room] == 1)   //activated
+        else if (roomdict[room] == 1)   //pic search mode activated
         {
             pic = 0;
             prepic = 0;
@@ -182,6 +186,23 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             randomstring = Math.random().toString(36).substring(7);
             pic.renameTo(new java.io.File(picpath + randomstring + '.jpg'));
             sendpic(room,replier,randomstring);
+            roomdict[room] = 0;
+        }
+        else if (roomdict[room] == 2)   //savepic mode
+        {
+            pic = 0;
+            prepic = 0;
+            piccount = 0;
+            findpic(kakaopath,1);
+            if (piccount > 4)
+            {
+                replier.reply('에러 발생 ㅠ.ㅠ\n사진을 다시 올려 주세요');
+                pic.delete();
+                return;
+            }
+            randomstring = Math.random().toString(36).substring(7);
+            pic.renameTo(new java.io.File(picpath + 'savedpic/' + randomstring + '.jpg'));
+            savepic(replier,randomstring);
             roomdict[room] = 0;
         }
         

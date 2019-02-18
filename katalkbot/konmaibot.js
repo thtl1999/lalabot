@@ -1,4 +1,4 @@
-﻿function listload(filename)
+function listload(filename)
 {
     var datapath = '/storage/emulated/0' + '/katalkbot/songlist' + filename + '.txt';
     var savedtxt = FileStream.read(datapath);

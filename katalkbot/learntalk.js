@@ -1,4 +1,4 @@
-const datapath = '/storage/emulated/0' + '/KakaoBot/BotData/learntalk/data.txt';
+const datapath = '/storage/emulated/0' + '/katalkbot/worddb.json';
 var savedtxt = FileStream.read(datapath);
 var jsonob = JSON.parse(savedtxt);
 var roomflag = {};
@@ -60,9 +60,14 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB)
         {
             var com = msg.split('=');
             var temp1 = com[0];
-            var temp2 = com[1];
+            var temp2 = '';
+            for (var i=1;i<com.length;i++)
+            {
+                temp2 += '=' + com[i];
+            }
+            temp2 = temp2.replace('=','');
             jsonob[room][temp1] = temp2;
-            replier.reply('아하! "' + com[0] + '"는 "' + com[1] + '" 이군요!');
+            replier.reply('아하! "' + com[0] + '"는 "' + temp2 + '" 이군요!');
             roomflag[room] = 0;
             savedtxt = JSON.stringify(jsonob);
             FileStream.write(datapath,savedtxt);
