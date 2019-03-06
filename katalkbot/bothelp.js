@@ -9,7 +9,32 @@ const pripara = [
 
 const datapath = '/storage/emulated/0' + '/katalkbot/readme.txt';
 const helpmsg = FileStream.read(datapath);
+const weatherurl = 'http://kweather.co.kr/air/data/area_realtime/MAP_PAST.php?code=4111113300';
 
+function dust(replier) {
+    var responseString = Utils.getWebText(weatherurl).replace(/<[^>]*>/g, '');
+    var jsonob = JSON.parse(responseString);
+    var pm10m = Number(String(jsonob.min_pm10.val));
+    var pm10M = Number(String(jsonob.max_pm10.val));
+    var pm25m = Number(String(jsonob.min_pm25.val));
+    var pm25M = Number(String(jsonob.max_pm25.val));
+    var average = pm10m + pm10M + pm25m + pm25M;
+    var status = '';
+    if (average > 400){
+        status = "매우나쁨 ㅠ.ㅠ";
+    }else if (average > 280){
+        status = "나쁨 ㅜ.ㅜ";
+    }else if (average > 140){
+        status = "보통 >.<";
+    }else {
+        status = "좋음 >.^";
+    }
+    var replystring = '미세먼지: ' + pm10m + '~' + pm10M + '\n';
+    replystring += '초미세먼지: ' + pm25m + '~' + pm25M + '\n';
+    replystring += '종합상태: ' + status;
+
+    replier.reply(replystring);
+}
 
 
 function response(room, msg, sender, isGroupChat, replier) {
@@ -33,6 +58,12 @@ function response(room, msg, sender, isGroupChat, replier) {
     else
     {
         priparacooltime -= 1;
+    }
+
+    if (msg == '미세먼지')
+    {
+        dust(replier);
+        return;
     }
     
 
