@@ -5,6 +5,7 @@ import sys
 import fileinput
 import re
 import json
+import html
 
 musiclevels = ['14','15','16','17','18','19','20']
 
@@ -23,7 +24,9 @@ for i in musiclevels:
     for line in lines:
         if '//' in line:
             songname = line.split('//')
-            jsonlist[i].append(songname[1].replace('\n',''))
+            songname2 = songname[1].replace('\n','')
+            songname3 = html.unescape(songname2)
+            jsonlist[i].append(songname3)
     f.close()
     os.remove(i + '.txt')
 
