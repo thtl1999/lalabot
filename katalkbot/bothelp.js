@@ -9,31 +9,33 @@ const pripara = [
 
 const datapath = '/storage/emulated/0' + '/katalkbot/readme.txt';
 const helpmsg = FileStream.read(datapath);
-const weatherurl = 'http://kweather.co.kr/air/data/area_realtime/MAP_PAST.php?code=4111113300';
+const weatherurl = 'https://www.suwon.go.kr/component/airPollution/PD_SuwonAPContentTopLists.do';
 
 function dust(replier) {
     var responseString = Utils.getWebText(weatherurl).replace(/<[^>]*>/g, '');
     var jsonob = JSON.parse(responseString);
-    var pm10m = Number(String(jsonob.min_pm10.val));
-    var pm10M = Number(String(jsonob.max_pm10.val));
-    var pm25m = Number(String(jsonob.min_pm25.val));
-    var pm25M = Number(String(jsonob.max_pm25.val));
-    var average = pm10m + pm10M + pm25m + pm25M;
+
+    var pm10 = Number(String(jsonob[4].caipm10total));
+    var pm25 = Number(String(jsonob[4].caipm25total));
+    var location = String(jsonob[4].citydong);
+
     var status = '';
-    if (average > 400){
+    if (pm10 > 150){
         status = "매우나쁨 ㅠ.ㅠ";
-    }else if (average > 280){
+    }else if (pm10 > 80){
         status = "나쁨 ㅜ.ㅜ";
-    }else if (average > 140){
+    }else if (pm10 > 30){
         status = "보통 >.<";
     }else {
         status = "좋음 >.^";
     }
-    var replystring = '미세먼지: ' + pm10m + '~' + pm10M + '\n';
-    replystring += '초미세먼지: ' + pm25m + '~' + pm25M + '\n';
-    replystring += '종합상태: ' + status;
 
-    replier.reply(replystring);
+    var r = '[' + location + ' 미세먼지]\n';
+    r += '미세먼지: ' + pm10 + '㎍/㎥\n';
+    r += '초미세먼지: ' + pm25 + '㎍/㎥\n';
+    r += '상태: ' + status;
+
+    replier.reply(r);
 }
 
 

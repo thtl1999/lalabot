@@ -66,6 +66,13 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB)
                 temp2 += '=' + com[i];
             }
             temp2 = temp2.replace('=','');
+            if (temp1.length > 255 || temp2.length > 255)
+            {
+                replier.reply('너무 길어욧! >.<');
+                roomflag[room] = 0;
+                return;
+            }
+
             jsonob[room][temp1] = temp2;
             replier.reply('아하! "' + com[0] + '"는 "' + temp2 + '" 이군요!');
             roomflag[room] = 0;
@@ -75,13 +82,13 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB)
         }
     }
 
-    if (msg == '현재톡방 디버그')
+    if (msg == '!?현재톡방 디버그' && sender == '김민성')
     {
         var temptext = JSON.stringify(jsonob[room]);
         replier.reply(temptext);
     }
 
-    if (msg == '전체톡방 디버그')
+    if (msg == '!?전체톡방 디버그' && sender == '김민성')
     {
         replier.reply(savedtxt);
     }

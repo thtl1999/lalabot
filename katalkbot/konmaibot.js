@@ -8,6 +8,7 @@ function listload(filename)
 var sdvx = listload('sdvx');
 var popn = listload('popn');
 var ddr = listload('ddr');
+var sdv4 = listload('sdv4');
 const YTkey = '****';
 var lastname = '';
 var lastlist;
@@ -16,7 +17,8 @@ var lastindex = 0;
 const ytkeyword = {
     '사볼':'sdvx',
     '디디알':'ddr',
-    '팝픈':'popn'
+    '팝픈':'popn',
+    '4볼':'sdvx'
 };
 
 function youtubesearch(replier, url, index)
@@ -107,6 +109,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB)
     msgprocess(msg,'사볼',sdvx,replier);
     msgprocess(msg,'팝픈',popn,replier);
     msgprocess(msg,'디디알',ddr,replier);
+    msgprocess(msg,'4볼',sdv4,replier);
 
     if (msg.indexOf('라라유튜브 ') != -1)
     {
@@ -124,5 +127,14 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB)
     {
         lastindex += 1;
         youtubesearch(replier,lastlist,lastindex);
+    }
+
+    if (msg.indexOf('라라골라.') != -1){
+        msg = msg.replace('.밀리애니','');
+        msg = msg.replace('.밀리 애니','');
+        var msglist = msg.split('.');
+        var selected = Math.floor(Math.random() * (msglist.length -1)) + 1;
+        replier.reply(msglist[selected]);
+        return;
     }
 }

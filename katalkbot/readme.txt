@@ -36,6 +36,9 @@ A에 할당된 단어를 잊습니다
 '라라사볼18ㅇ'
 사볼 18렙 곡을 하나 추천해주고 제목으로 유튜브 검색을 합니다
 
+'라라4볼17'
+SOUND VOLTEX VIVID WAVE 업데이트가 되지 않은 기체에서 SOUND VOLTEX IV HEAVENLY HAVEN 까지의 곡만 추천해줍니다.
+
 사볼곡 데이터: sdvx.in
 팝픈곡 데이터: https://hellwork.jp/popn/wiki/
 디디알곡 데이터: https://www21.atwiki.jp/asigami
@@ -52,6 +55,10 @@ A에 할당된 단어를 잊습니다
 
 [미세먼지 정보]
 '미세먼지' -> 율전동 미세먼지 정보를 보여줍니다
-정보: http://kweather.co.kr/air/air_area_realtime_popup6.html?acode=4111113300
+정보: https://www.suwon.go.kr/web/safesuwon/air/PD_index.do#none
+
+[결정장애 도우미]
+'라라골라.A.B.C' -> A B C 중 하나를 골라줍니다
+예) 라라골라.밀리애니.세계평화
 
 누군지도 모르는 라라가 톡방 내용을 읽는게 불편하시다면 https://github.com/thtl1999/lalabot 에서 직접 소스코드를 복사해서 봇을 만들 수 있습니다.

@@ -1,9 +1,9 @@
-﻿var pic;
+var pic;
 const kakaopath = '/storage/emulated/0/Android/data/com.kakao.talk/contents/';
 const picpath = '/storage/emulated/0/botpic/';
 const searchserver = 'https://saucenao.com/search.php?';
 const api_key = '****';
-const serverip = 'http://example.com:12345/';
+const serverip = '****';
 const basichtml = FileStream.read(picpath + 'html/' + 'basehtml.html');
 const jjalpath = '/storage/emulated/0/botpic/jjal/';
 
@@ -183,10 +183,13 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 pic.delete();
                 return;
             }
+            
             randomstring = Math.random().toString(36).substring(7);
             pic.renameTo(new java.io.File(picpath + randomstring + '.jpg'));
             sendpic(room,replier,randomstring);
             roomdict[room] = 0;
+
+            findpic(picpath + 'temphtmls/',0);      //from jjalbot.js
         }
         else if (roomdict[room] == 2)   //savepic mode
         {
@@ -204,6 +207,8 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             pic.renameTo(new java.io.File(picpath + 'savedpic/' + randomstring + '.jpg'));
             savepic(replier,randomstring);
             roomdict[room] = 0;
+
+            findpic(picpath + 'temphtmls/',0);      //from jjalbot.js
         }
         
     }

@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Unlimited 2D works</title>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  
+<script type="text/javascript">
+    var imageURLs = IMAGEFILES;
+
+  function getImageTag() {
+    var img = '<div><img src=\"';
+    var randomIndex = Math.floor(Math.random() * imageURLs.length);
+    img += 'http://lalabot.ga:12345/jjal/' + imageURLs[randomIndex];
+    img += '\" style="width: 100%; height: auto;"/></div>';
+    return img;
+  }
+
+  
+  var page = 2;
+
+$(window).scroll(function() {
+    if ($(window).scrollTop() > $(document).height() - window.innerHeight - 50) {
+      console.log(++page);
+      $("body").append(getImageTag());
+
+    }
+});
+
+
+</script>
+</head>
+<body>
+    <h1 style="text-align:center">Unlimited 2D works</h1>
+<script type="text/javascript">
+  $("body").append(getImageTag());
+  $("body").append(getImageTag());
+</script>
+</body>
+</html>

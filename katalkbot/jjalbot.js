@@ -1,15 +1,27 @@
 const rootpath = '/storage/emulated/0/botpic/';
 const danbo_apikey = '****';
-const serverip = 'http://example.com:12345/';
+const serverip = '****';
 const basichtml = '<html><head></head><body><img src="SOURCE" style="width: 100%; height: auto;"></body></html>';
 const basichtml2 = '<html><head></head><body></body></html>';
-const imagetag = '<img src="SOURCE" style="width: 100%; height: auto;"></body>';
+const imagetag = '<a href="HYPERLINK"><img class="lazy" src="PREVIEW" data-original="SOURCE" style="width: 100%; height: auto;"></a></body>';
 const requesturl = 'https://danbooru.donmai.us/posts.json?random=1&limit=50&tags=';
 const pixivurl = 'https://www.pixiv.net/member_illust.php?mode=medium&illust_id=';
+const imagescript = '<script src="//code.jquery.com/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script><script>$("img.lazy").lazyload({effect : "fadeIn" , threshold : 2});</script>';
 
 const jjaldir = new java.io.File(rootpath + 'jjal/');
 const jjalfilelist = jjaldir.listFiles();
 const jjalnumber = jjalfilelist.length;
+var jjalfilelistarr = [];
+
+for (var i=0;i<jjalfilelist.length;i++)
+{
+    jjalfilelistarr.push(jjalfilelist[i].getName());
+}
+
+
+
+const unlimitedbase = FileStream.read(rootpath + 'basehtmls/unlimited.html');
+const unlimitedbase2 = unlimitedbase.replace('IMAGEFILES',JSON.stringify(jjalfilelistarr));
 
 const girlstag = ['1girl','2girls','3girls','4girls','5girls','6girls','7girls','8girls'];
 const limittag = ['loli','shota','toddlercon'];
@@ -17,9 +29,18 @@ const limittag = ['loli','shota','toddlercon'];
 const customtag = JSON.parse(FileStream.read('/storage/emulated/0/' + 'katalkbot/customtag.json'));
 const romaji = JSON.parse(FileStream.read('/storage/emulated/0/' + 'katalkbot/krtojp.json'));
 
-function addimage(htmlbody, source)
+function randompic(replier, filename)
 {
-    var newimage = imagetag.replace('SOURCE',source);
+    var jjalpath = 'jjal/' + filename;
+    var newhtml = basichtml.replace('SOURCE',serverip + jjalpath);
+    var newhtmlpath ='html/' + filename + '.html';
+    FileStream.write(rootpath + newhtmlpath, newhtml);
+    replier.reply(serverip + newhtmlpath);
+}
+
+function addimage(htmlbody, source, preview, hyperlink)
+{
+    var newimage = imagetag.replace('SOURCE',source).replace('PREVIEW',preview).replace('HYPERLINK',hyperlink);
     var newhtmlbody = htmlbody.replace('</body>',newimage + '</body>');
     return newhtmlbody;
 }
@@ -65,15 +86,11 @@ function response(room, msg, sender, isGroupChat, replier) {
 
     if (msg == '라라짤')
     {
-        var htmlbody = basichtml2;
-        for (var i=0;i<10;i++)
-        {
-            var selected = Math.floor(Math.random() * (jjalnumber));
-            var source = serverip + 'jjal/' + jjalfilelist[selected].getName();
-            htmlbody = addimage(htmlbody, source);
-        }
-
-        replier.reply(makehtml(htmlbody));
+        var htmlbody = unlimitedbase2;
+        var htmlname = Math.random().toString(36).substring(7);
+        FileStream.write(rootpath + 'temphtmls/' + htmlname + '.html', htmlbody);
+        var htmlpath = serverip + 'temphtmls/' + htmlname + '.html';
+        replier.reply(htmlpath);
         return;
     }
 
@@ -108,7 +125,7 @@ function response(room, msg, sender, isGroupChat, replier) {
 
         if (jsonob.length == 0)
         {
-            replier.reply('못찾았어요 ㅠ.ㅠ');
+            replier.reply(tag + '에 대한 것을 못찾았어요 ㅠ.ㅠ');
             return;
         }
 
@@ -140,15 +157,16 @@ function response(room, msg, sender, isGroupChat, replier) {
                     var temp2 = temp1[temp1.length -1].split('_');
                     var pixivid = temp2[0].split('.');
                     replier.reply(pixivurl + pixivid[0]);
-                    index += 10;    //prevent too many reply
+                    
                 }
                 else    //add image to html
                 {
 
-                    htmlbody = addimage(htmlbody, String(jsonob[index].file_url));
+                    htmlbody = addimage(htmlbody, String(jsonob[index].file_url), String(jsonob[index].preview_file_url), 'https://danbooru.donmai.us/posts/' + String(jsonob[index].id));
                     information += '\n작가: ' + String(jsonob[index].tag_string_artist) + ', postID: ' + String(jsonob[index].id);
-                    index += 5;    //prevent too many reply
                 }
+
+                if (found > 8) break;//prevent too many reply
             }
             index++;
         }
@@ -162,7 +180,9 @@ function response(room, msg, sender, isGroupChat, replier) {
 
         if (htmlbody == basichtml2) return;
 
-        replier.reply(makehtml(htmlbody) + information);
+        htmlbody = htmlbody.replace('</body>',imagescript + '</body>');
+
+        replier.reply(tag + '에 대한 것을 찾아봤슘돠!\n' + makehtml(htmlbody));
     }
 
 }
